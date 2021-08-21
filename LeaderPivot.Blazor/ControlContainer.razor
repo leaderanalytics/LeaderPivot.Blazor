@@ -1,0 +1,68 @@
+﻿@namespace LeaderPivot.Blazor
+@using LeaderAnalytics.LeaderPivot
+@typeparam T
+
+       
+<div Class="d-flex flex-column justify-space-between" Elevation="0" Style="height:100%">
+    
+    
+    <div Class="flex-row align-self-start" Elevation="0">
+        <input type="checkbox" checked="@(DisplayGrandTotals.HasValue ? DisplayGrandTotals.Value : false)"  @onclick="DisplayGrandTotalsClick"  /><label>Grand Totals</label>
+        <button onclick="DisplayGrandTotalsClick">Reload Data</button>
+    </div>
+    
+    <div Class="mt-8 flex-column" Elevation="0">
+
+        @foreach (Measure<T> measure in Measures)
+        {
+            <div>
+                <input type="checkbox" checked="@measure.IsEnabled" @onchange="(x => MeasureCheckedChanged(measure, x))" /><label>@measure.DisplayValue</label>
+            </div>
+        }
+    </div>
+    
+    <div Class="mt-8" Elevation="0">
+        <DimensionContainer T="T" @bind-Dimensions="ChildDimensions"></DimensionContainer>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
+    [Parameter] public IEnumerable<Measure<T>> Measures { get; set; }
+    [Parameter] public bool? DisplayGrandTotals { get; set; }
+    [Parameter] public EventCallback<bool?> DisplayGrandTotalsChanged { get; set; }
+    [Parameter] public EventCallback<IEnumerable<Measure<T>>> MeasuresChanged { get; set; }
+    [Parameter] public EventCallback<IEnumerable<Dimension<T>>> DimensionsChanged { get; set; }
+
+
+    [Parameter]
+    public IEnumerable<Dimension<T>> ChildDimensions
+    {
+        get => Dimensions;
+        set
+        {
+            Dimensions = value;
+            DimensionsChanged.InvokeAsync(value);
+        }
+    }
+
+    public ControlContainer()
+    {
+        Dimensions = new List<Dimension<T>>();
+        Measures = new List<Measure<T>>();
+    }
+
+    public async Task DisplayGrandTotalsClick()
+    {
+        await DisplayGrandTotalsChanged.InvokeAsync(!DisplayGrandTotals);
+    }
+
+
+    public async Task MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
+    {
+        measure.IsEnabled = (bool)e.Value;
+        await MeasuresChanged.InvokeAsync(Measures);
+    }
+}

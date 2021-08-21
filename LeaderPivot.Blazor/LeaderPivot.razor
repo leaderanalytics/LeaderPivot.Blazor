@@ -1,0 +1,66 @@
+﻿@namespace LeaderPivot.Blazor
+@using LeaderAnalytics.LeaderPivot 
+@typeparam T
+@inherits BaseComponent
+
+
+<link href="_content/LeaderAnalytics.LeaderPivot.Blazor/css/bootstrap/css/bootstrap.css" rel="stylesheet" >
+<div class="blah"><h1>blah</h1></div>       
+<div class="mud-pivot-container" style="TableStyle">
+    <table class="table">
+        @if (Matrix?.Rows?.Any() ?? false)
+        {
+            @foreach (var row in Matrix.Rows.Select((x, y) => new { Item = x, Index = y }))
+            {
+                <Tr>
+                @foreach (var c in row.Item.Cells.Select((x, y) => new { Item = x, Index = y }))
+                {
+                    switch (c.Item.CellType)
+                    {
+                        case CellType.Measure:
+                            <MeasureCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</MeasureCell> break;
+                        case CellType.Total:
+                            <TotalCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</TotalCell> break;
+                        case CellType.GrandTotal:
+                            <GrandTotalCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</GrandTotalCell> break;
+                        case CellType.GroupHeader:
+                            <GroupHeaderCell IsExpanded="@c.Item.IsExpanded" NodeID="@c.Item.NodeID" CanToggleExapansion="@c.Item.CanToggleExapansion" ToggleExpansion="ToggleNodeExpansion" RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</GroupHeaderCell> break;
+                        case CellType.TotalHeader:
+                            <TotalHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</TotalHeaderCell> break;
+                        case CellType.GrandTotalHeader:
+                            <GrandTotalHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">@c.Item.Value</GrandTotalHeaderCell> break;
+                        case CellType.MeasureHeader:
+                            <MeasureHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan">
+                                    
+                                    
+                                @if (row.Index == 0 && c.Index == 0)
+                                {
+                                    <ControlContainer T="T" 
+                                                              @bind-Dimensions="RowDimensions"  
+                                                              @bind-Measures="Measures" 
+                                                              @bind-DisplayGrandTotals="DisplayGrandTotals">
+
+                                    </ControlContainer>
+                                }
+                                else if (row.Index == 0 && c.Index == 1)
+                                {
+                                    <DimensionContainer T="T" @bind-Dimensions="ColumnDimensions"></DimensionContainer>   
+                                }
+                                else
+                                {
+                                    @c.Item.Value;
+                                }
+
+                            </MeasureHeaderCell> break;
+                        default:
+                            throw new Exception($"CellType {c.Item.CellType.ToString()} is not recognized.");
+                    }
+                }
+                </Tr>
+            }
+        }
+    </table>
+</div>
+
+
+

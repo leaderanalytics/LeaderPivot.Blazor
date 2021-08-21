@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31605.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderPivot.Blazor", "LeaderPivot.Blazor\LeaderPivot.Blazor.csproj", "{4A8C53A1-2621-420E-B803-D80036D829B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderPivot", "..\LeaderPivot\LeaderPivot\LeaderPivot.csproj", "{BE17FC9F-4F51-4F64-BEFC-CA7D956F147F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A8C53A1-2621-420E-B803-D80036D829B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A8C53A1-2621-420E-B803-D80036D829B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A8C53A1-2621-420E-B803-D80036D829B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A8C53A1-2621-420E-B803-D80036D829B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE17FC9F-4F51-4F64-BEFC-CA7D956F147F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE17FC9F-4F51-4F64-BEFC-CA7D956F147F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE17FC9F-4F51-4F64-BEFC-CA7D956F147F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE17FC9F-4F51-4F64-BEFC-CA7D956F147F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DAD5765-6D39-44ED-A679-10DC376103A6}
+	EndGlobalSection
+EndGlobal

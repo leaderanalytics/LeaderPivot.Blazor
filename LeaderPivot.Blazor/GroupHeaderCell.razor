@@ -1,0 +1,39 @@
+﻿@namespace LeaderPivot.Blazor
+@inherits Cell
+
+<td data-label="@DataLabel" style="@Style" class="@ClassName" @attributes="@UserAttributes" rowspan="@RowSpan" colspan="@ColSpan" scope="@Scope">
+    <table>
+        <tr>
+            <td>
+                @if (CanToggleExapansion)
+                {
+                    @if (IsExpanded)
+                    {
+                        <button @onclick="HandleToggleExpand"></button>
+                    }
+                    else
+                    {
+                        <button @onclick="HandleToggleExpand"></button>
+                    }
+                }
+            </td>
+            <td>
+                @ChildContent 
+            </td>
+        </tr>
+     </table>
+</td>
+
+@code {
+ 
+    [Parameter] public bool IsExpanded { get; set; }
+    [Parameter] public bool CanToggleExapansion { get; set; }
+    [Parameter] public string NodeID { get; set; }
+    [Parameter] public EventCallback<string> ToggleExpansion { get; set; }
+
+    public async Task HandleToggleExpand()
+    {
+        await ToggleExpansion.InvokeAsync(NodeID);
+    }
+
+}

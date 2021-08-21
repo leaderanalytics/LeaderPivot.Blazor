@@ -1,0 +1,37 @@
+﻿@namespace LeaderPivot.Blazor
+@using LeaderAnalytics.LeaderPivot
+@typeparam T
+
+       
+<div Class="d-flex flex-row flex-wrap" Elevation="0">
+
+    @foreach (Dimension<T> dim in Dimensions)
+    {
+        if (dim.IsAscending)
+        {
+            <button @onclick="(async x => await DimensionClicked(dim.DisplayValue))">@dim.DisplayValue</button>
+        }
+        else
+        {
+            <button  @onclick="(async x => await DimensionClicked(dim.DisplayValue))">@dim.DisplayValue</button>
+        }
+    }
+</div>
+
+@code {
+
+    [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
+    [Parameter] public EventCallback<IEnumerable<Dimension<T>>> DimensionsChanged { get; set; }
+
+    public DimensionContainer()
+    {
+        Dimensions = new List<Dimension<T>>();
+    }
+
+    public async Task DimensionClicked(string id)
+    {
+        Dimension<T> dim = Dimensions.First(x => x.DisplayValue == id);
+        dim.IsAscending = !dim.IsAscending;
+        await DimensionsChanged.InvokeAsync(Dimensions);
+    }
+}
