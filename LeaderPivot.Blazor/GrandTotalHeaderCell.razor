@@ -1,7 +1,7 @@
 ﻿@namespace LeaderPivot.Blazor
 @inherits Cell
 
-<td data-label="@DataLabel" style="@Style" class="@ClassName" @attributes="@UserAttributes" rowspan="@RowSpan" colspan="@ColSpan" scope="@Scope">
+<td data-label="@DataLabel"  class="@PivotStyle.GrandTotalHeaderCell" style="@PivotStyle.CellStyle"   @attributes="@UserAttributes" rowspan="@RowSpan" colspan="@ColSpan" scope="@Scope">
     @ChildContent
 </td>
 

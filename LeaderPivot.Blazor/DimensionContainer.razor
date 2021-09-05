@@ -3,18 +3,23 @@
 @typeparam T
 
        
-<div Class="d-flex flex-row flex-wrap" Elevation="0">
+<div Class="d-flex flex-row flex-wrap">
 
     @foreach (Dimension<T> dim in Dimensions)
     {
-        if (dim.IsAscending)
-        {
-            <button @onclick="(async x => await DimensionClicked(dim.DisplayValue))">@dim.DisplayValue</button>
-        }
-        else
-        {
-            <button  @onclick="(async x => await DimensionClicked(dim.DisplayValue))">@dim.DisplayValue</button>
-        }
+        Dimension<T> tmpDim = dim;
+
+        <button class="@PivotStyle.DimensionButton" style="min-width:120px;margin-right:1vw;margin-top:1vw;" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">
+            @if (tmpDim.IsAscending)
+            {
+                <span class="oi oi-caret-top" title="Sort ascending" aria-hidden="true" style="margin-right:4px;"></span>
+            }
+            else
+            {
+                <span class="oi oi-caret-bottom" title="Sort descending" aria-hidden="true" style="margin-right:4px;"></span>
+            }
+            @tmpDim.DisplayValue
+        </button>
     }
 </div>
 
@@ -22,6 +27,8 @@
 
     [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
     [Parameter] public EventCallback<IEnumerable<Dimension<T>>> DimensionsChanged { get; set; }
+    [Parameter] public EventCallback RenderTable { get; set; }
+    [Parameter] public LeaderPivotStyle PivotStyle { get; set; }
 
     public DimensionContainer()
     {
@@ -33,5 +40,6 @@
         Dimension<T> dim = Dimensions.First(x => x.DisplayValue == id);
         dim.IsAscending = !dim.IsAscending;
         await DimensionsChanged.InvokeAsync(Dimensions);
+        await RenderTable.InvokeAsync(null);
     }
 }

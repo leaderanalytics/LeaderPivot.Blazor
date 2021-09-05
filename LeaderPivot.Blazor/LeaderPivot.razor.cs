@@ -12,101 +12,83 @@ namespace LeaderPivot.Blazor
 
     public partial class LeaderPivot<T> : BaseComponent
     {
+        [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
+        [Parameter] public IEnumerable<Measure<T>> Measures { get; set; }
+        [Parameter] public bool DisplayGrandTotals { get; set; }
+        [Parameter] public bool DisplayGrandTotalOption { get; set; }
+        [Parameter] public bool DisplayDimensionButtons { get; set; }
+        [Parameter] public bool DisplayMeasureSelectors { get; set; }
+        [Parameter] public bool DisplayReloadDataButton { get; set; }
+        [Parameter] public Func<PagedQueryArgs, PagedQueryResult<T>> DataSource { get; set; }
+
 
         public IEnumerable<Dimension<T>> RowDimensions 
         { 
             get => Dimensions.Where(x => x.IsRow); 
-            set => RenderTable(); 
+            set => _ = value; 
         }
 
         public IEnumerable<Dimension<T>> ColumnDimensions 
         { 
             get => Dimensions.Where(x => !x.IsRow); 
-            set => RenderTable(); 
+            set => _ = value; 
         }
-
-        private IEnumerable<Dimension<T>> _Dimensions;
-        [Parameter] public IEnumerable<Dimension<T>> Dimensions 
-        {
-            get => _Dimensions;
-            set
-            {
-                if (_Dimensions != value)
-                {
-                    _Dimensions = value;
-                    RenderTable();
-                }
-            }
-        }
-        
-        private IEnumerable<Measure<T>> _Measures;
-        [Parameter] public IEnumerable<Measure<T>> Measures 
-        {
-            get => _Measures;
-            set
-            {
-                if (_Measures != value)
-                {
-                    _Measures = value;
-                    RenderTable();
-                }
-            }
-        }
-        
-        private bool? _DisplayGrandTotals;
-        [Parameter] public bool? DisplayGrandTotals
-        {
-            get => _DisplayGrandTotals;
-            set
-            {
-                if (_DisplayGrandTotals != value)
-                {
-                    _DisplayGrandTotals = value;
-                    RenderTable();
-                }
-            }
-        }
-
-        private Func<PagedQueryArgs, PagedQueryResult<T>> _DataSource;
-        [Parameter] public Func<PagedQueryArgs, PagedQueryResult<T>> DataSource 
-        {
-            get => _DataSource;
-            set
-            {
-                if (_DataSource != value)
-                {
-                    _DataSource = value;
-                    RenderTable();
-                }
-            }
-        }
-        
-
-        // -------------------------- Matrix -------------------------------
 
         public Matrix Matrix { get; set; }
         private MatrixBuilder<T> matrixBuilder;
+        private List<T> Data;
 
-        protected override async Task OnInitializedAsync()
+        public LeaderPivot()
         {
             NodeBuilder<T> nodeBuilder = new NodeBuilder<T>(NodeCache<T>.Instance);
             Validator<T> validator = new Validator<T>();
             matrixBuilder = new MatrixBuilder<T>(nodeBuilder, validator);
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                if (PivotStyle == null)
+                    PivotStyle = new LeaderPivotStyle();
+                
+                await ReloadData();
+            }
+        }
+
+        public async Task ReloadData()
+        {
+            Data = DataSource(new PagedQueryArgs()).Data;
+            RenderTable();
+        }
+
         public void RenderTable()
         {
-            if (DataSource == null || Dimensions == null || Measures == null || !DisplayGrandTotals.HasValue || matrixBuilder == null)
-                return;
-
-            List<T> Data = DataSource(new PagedQueryArgs()).Data;
-
-            Matrix = matrixBuilder.BuildMatrix(Data, Dimensions, Measures, DisplayGrandTotals.Value);
+            Matrix = matrixBuilder.BuildMatrix(Data, Dimensions, Measures, DisplayGrandTotals);
         }
 
         public void ToggleNodeExpansion(string nodeID)
         {
             Matrix = matrixBuilder.ToggleNodeExpansion(nodeID);
+        }
+
+        public void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
+        {
+            bool option = (bool)e.Value;
+
+            if (!(!option && Measures.Count(x => x.IsEnabled) == 1))
+            {
+                measure.IsEnabled = option;
+            }
+            RenderTable();
+        }
+
+        public void GrandTotalsCheckedChanged()
+        {
+            DisplayGrandTotals = !DisplayGrandTotals;
+            RenderTable();
         }
     }
 }

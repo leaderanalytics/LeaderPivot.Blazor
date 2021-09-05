@@ -23,6 +23,10 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
@@ -46,15 +50,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LeaderPivot\LeaderPivot\LeaderPivot.csproj" />
+    <Folder Include="wwwroot\css\open-iconic\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\bootstrap\" />
-    <Folder Include="wwwroot\css\open-iconic\" />
+    <ProjectReference Include="..\..\LeaderPivot\LeaderPivot\LeaderPivot.csproj" />
   </ItemGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\NugetPackages\" />
   </Target>
+
+
+
+  <PropertyGroup>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <GenerateMvcApplicationPartsAssemblyAttributes>true</GenerateMvcApplicationPartsAssemblyAttributes>
+    <RazorCompileOnBuild>true</RazorCompileOnBuild>
+    <IncludeRazorContentInPack>false</IncludeRazorContentInPack>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <EnableDefaultRazorGenerateItems>true</EnableDefaultRazorGenerateItems>
+  </PropertyGroup>
+  
+
 </Project>
