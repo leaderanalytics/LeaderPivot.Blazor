@@ -26,8 +26,10 @@
                             <TotalHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan" PivotStyle="@PivotStyle">@c.Item.Value</TotalHeaderCell> break;
                         case CellType.GrandTotalHeader:
                             <GrandTotalHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan" PivotStyle="@PivotStyle">@c.Item.Value</GrandTotalHeaderCell> break;
-                        case CellType.MeasureHeader:
-                            <MeasureHeaderCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan" PivotStyle="@PivotStyle">
+                        case CellType.MeasureTotalLabel:
+                            <MeasureTotalLabelCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan" PivotStyle="@PivotStyle">@c.Item.Value</MeasureTotalLabelCell> break;
+                        case CellType.MeasureLabel:
+                            <MeasureLabelCell RowSpan="@c.Item.RowSpan" ColSpan="@c.Item.ColSpan" PivotStyle="@PivotStyle">
                                     
                                     
                                 @if (row.Index == 0 && c.Index == 0)
@@ -43,11 +45,13 @@
 
                                             @foreach (var measure in Measures)
                                             {
-                                                <label class="switch mb-1 w-100">
-                                                    <input type="checkbox" checked="@(measure.IsEnabled)" @onchange="@(x => MeasureCheckedChanged(measure, x))" />
-                                                    <span class="@PivotStyle.CheckBox" ></span>
-                                                    <label class="@PivotStyle.CheckBoxLabel">@measure.DisplayValue</label>
-                                                </label>
+                                                <div class="d-flex">
+                                                    <label class="switch mb-1">
+                                                        <input type="checkbox" checked="@(measure.IsEnabled)" @onchange="@(x => MeasureCheckedChanged(measure, x))" />
+                                                        <span class="@PivotStyle.CheckBox"></span>
+                                                        <label class="@PivotStyle.CheckBoxLabel">@measure.DisplayValue</label>
+                                                    </label>
+                                                </div>
                                             }
                                         </div>
 
@@ -61,7 +65,7 @@
                                     
                                         @if (DisplayDimensionButtons)
                                         {
-                                            <div class="d-flex mt-auto align-self-center" >
+                                            <div class="d-flex mt-auto" >
                                                 <DimensionContainer T="T" @bind-Dimensions="RowDimensions" RenderTable="RenderTable" PivotStyle="@PivotStyle"></DimensionContainer>
                                             </div>
                                         }
@@ -78,7 +82,7 @@
                                     @c.Item.Value;
                                 }
 
-                            </MeasureHeaderCell> break;
+                            </MeasureLabelCell> break;
                         default:
                             throw new Exception($"CellType {c.Item.CellType.ToString()} is not recognized.");
                     }

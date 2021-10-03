@@ -40,7 +40,7 @@ namespace LeaderPivot.Blazor
 
         public LeaderPivot()
         {
-            NodeBuilder<T> nodeBuilder = new NodeBuilder<T>(NodeCache<T>.Instance);
+            NodeBuilder<T> nodeBuilder = new NodeBuilder<T>();
             Validator<T> validator = new Validator<T>();
             matrixBuilder = new MatrixBuilder<T>(nodeBuilder, validator);
         }

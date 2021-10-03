@@ -9,7 +9,7 @@
     {
         Dimension<T> tmpDim = dim;
 
-        <button class="@PivotStyle.DimensionButton" style="min-width:120px;margin-right:1vw;margin-top:1vw;" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">
+        <button class="@PivotStyle.DimensionButton" style="margin-right:1vw;margin-top:1vw;" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">
             @if (tmpDim.IsAscending)
             {
                 <span class="oi oi-caret-top" title="Sort ascending" aria-hidden="true" style="margin-right:4px;"></span>

@@ -4,30 +4,6 @@
 <td data-label="@DataLabel" class="@PivotStyle.GroupHeaderCell" style="@PivotStyle.CellStyle"  @attributes="@UserAttributes" rowspan="@RowSpan" colspan="@ColSpan" scope="@Scope" >
     @if (CanToggleExapansion)
     {
-        @*<table class="table-borderless">
-            <tr>
-                <td class="m-0 p-0" width="1px">
-                <button type="button" class="@PivotStyle.GroupHeaderButton" @onclick="HandleToggleExpand" >
-                
-                    @if (IsExpanded)
-                    {
-                        <span class="oi oi-caret-bottom" title="Collapse" aria-hidden="true"></span>
-                    }
-                    else
-                    {
-                        <span class="oi oi-caret-right" title="Expand" aria-hidden="true"></span>
-                    }
-
-                </button>
-                
-                </td>
-                <td style="padding: 0px 0px 0px 4px">
-                    @ChildContent 
-                </td>
-            </tr>
-         </table>*@
-
-
 
          <div style="white-space:nowrap">
              <button type="button" class="@PivotStyle.GroupHeaderButton" @onclick="HandleToggleExpand" >
@@ -43,10 +19,7 @@
 
              </button>
              @ChildContent 
-
          </div>
-
-
     }
     else
     { 
