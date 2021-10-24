@@ -9,10 +9,9 @@ using LeaderAnalytics.LeaderPivot;
 
 namespace LeaderPivot.Blazor
 {
-
     public partial class LeaderPivot<T> : BaseComponent
     {
-        [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
+        [Parameter] public IList<Dimension<T>> Dimensions { get; set; }
         [Parameter] public IEnumerable<Measure<T>> Measures { get; set; }
         [Parameter] public bool DisplayGrandTotals { get; set; }
         [Parameter] public bool DisplayGrandTotalOption { get; set; }
@@ -21,18 +20,19 @@ namespace LeaderPivot.Blazor
         [Parameter] public bool DisplayReloadDataButton { get; set; }
         [Parameter] public Func<PagedQueryArgs, PagedQueryResult<T>> DataSource { get; set; }
 
-
-        public IEnumerable<Dimension<T>> RowDimensions 
-        { 
-            get => Dimensions.Where(x => x.IsRow); 
+        public List<Dimension<T>> RowDimensions 
+        {
+            get => Dimensions.Where(x => x.IsRow).OrderBy(x => x.Sequence).ToList(); 
             set => _ = value; 
         }
 
-        public IEnumerable<Dimension<T>> ColumnDimensions 
+        public List<Dimension<T>> ColumnDimensions 
         { 
-            get => Dimensions.Where(x => !x.IsRow); 
+            get => Dimensions.Where(x => !x.IsRow).OrderBy(x => x.Sequence).ToList(); 
             set => _ = value; 
         }
+
+        public int MaxDimensionsPerAxis => Dimensions.Count == 2 ? 2 : Dimensions.Count - 1;
 
         public Matrix Matrix { get; set; }
         private MatrixBuilder<T> matrixBuilder;
@@ -88,6 +88,18 @@ namespace LeaderPivot.Blazor
         public void GrandTotalsCheckedChanged()
         {
             DisplayGrandTotals = !DisplayGrandTotals;
+            RenderTable();
+        }
+
+        public void DimensionsChanged(Tuple<List<Dimension<T>>, bool> args)
+        {
+            foreach (Dimension<T> dim in args.Item1)
+            {
+                Dimension<T> target = Dimensions.First(x => x.ID == dim.ID);
+                target.Sequence = dim.Sequence;
+                target.IsRow = dim.IsRow;
+            }
+            
             RenderTable();
         }
     }

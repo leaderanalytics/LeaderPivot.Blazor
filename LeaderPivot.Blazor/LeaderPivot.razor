@@ -66,7 +66,7 @@
                                         @if (DisplayDimensionButtons)
                                         {
                                             <div class="d-flex mt-auto" >
-                                                <DimensionContainer T="T" @bind-Dimensions="RowDimensions" RenderTable="RenderTable" PivotStyle="@PivotStyle"></DimensionContainer>
+                                                <DimensionContainer T="T" Dimensions="RowDimensions" RenderTable="RenderTable" DimensionsChanged="DimensionsChanged"  MaxDimensions="MaxDimensionsPerAxis" IsRows="true" PivotStyle="@PivotStyle"></DimensionContainer>
                                             </div>
                                         }
                                     </div>
@@ -74,7 +74,7 @@
                                 else if (row.Index == 0 && c.Index == 1 && DisplayDimensionButtons)
                                 {
                                     <div class="d-flex align-self-center" style="margin-top:-1vh;">
-                                        <DimensionContainer T="T" @bind-Dimensions="ColumnDimensions" RenderTable="RenderTable" PivotStyle="@PivotStyle"></DimensionContainer>  
+                                        <DimensionContainer T="T" Dimensions="ColumnDimensions" RenderTable="RenderTable" DimensionsChanged="DimensionsChanged" MaxDimensions="MaxDimensionsPerAxis" IsRows="false" PivotStyle="@PivotStyle"></DimensionContainer>  
                                     </div>
                                 }
                                 else

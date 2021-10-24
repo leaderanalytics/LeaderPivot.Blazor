@@ -1,34 +1,34 @@
 ﻿@namespace LeaderPivot.Blazor
-@using LeaderAnalytics.LeaderPivot
-@typeparam T
+@using LeaderAnalytics.LeaderPivot;
+@typeparam T;
 
-       
-<div Class="d-flex flex-row flex-wrap">
 
-    @foreach (Dimension<T> dim in Dimensions)
-    {
-        Dimension<T> tmpDim = dim;
 
-        <button class="@PivotStyle.DimensionButton" style="margin-right:1vw;margin-top:1vw;" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">
-            @if (tmpDim.IsAscending)
-            {
-                <span class="oi oi-caret-top" title="Sort ascending" aria-hidden="true" style="margin-right:4px;"></span>
-            }
-            else
-            {
-                <span class="oi oi-caret-bottom" title="Sort descending" aria-hidden="true" style="margin-right:4px;"></span>
-            }
-            @tmpDim.DisplayValue
-        </button>
-    }
-</div>
+<Dropzone TItem="Dimension<T>" Items="Dimensions" OnItemDrop="@((p) => OnItemDrop(p))" MaxItems="MaxDimensions" Class="d-flex flex-row flex-wrap"  >
+    @{Dimension<T> tmpDim = context;}
+        
+    <button class="@PivotStyle.DimensionButton" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">
+        @if (tmpDim.IsAscending)
+        {
+            <span class="oi oi-caret-top" title="Sort ascending" aria-hidden="true" style="margin-right:4px;"></span>
+        }
+        else
+        {
+            <span class="oi oi-caret-bottom" title="Sort descending" aria-hidden="true" style="margin-right:4px;"></span>
+        }
+        @tmpDim.DisplayValue
+    </button>
+</Dropzone>
+
 
 @code {
 
-    [Parameter] public IEnumerable<Dimension<T>> Dimensions { get; set; }
-    [Parameter] public EventCallback<IEnumerable<Dimension<T>>> DimensionsChanged { get; set; }
+    [Parameter] public List<Dimension<T>> Dimensions { get; set; }
+    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, bool>> DimensionsChanged { get; set; }
     [Parameter] public EventCallback RenderTable { get; set; }
     [Parameter] public LeaderPivotStyle PivotStyle { get; set; }
+    [Parameter] public int MaxDimensions { get; set; }
+    [Parameter] public bool IsRows { get; set; }
 
     public DimensionContainer()
     {
@@ -39,7 +39,17 @@
     {
         Dimension<T> dim = Dimensions.First(x => x.DisplayValue == id);
         dim.IsAscending = !dim.IsAscending;
-        await DimensionsChanged.InvokeAsync(Dimensions);
         await RenderTable.InvokeAsync(null);
+    }
+
+    public void OnItemDrop(Dimension<T> dim)
+    {
+        for (int i = 0; i < Dimensions.Count; i++)
+        {
+            Dimensions[i].Sequence = i;
+            Dimensions[i].IsRow = IsRows;
+        }
+        
+        DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, IsRows));
     }
 }

@@ -227,3 +227,69 @@ table.table-bordered-dark > tr > td {
 input:checked + .slider-dark {
     background-color: #6c757d;
 }
+
+
+/*drag drop styles*/
+
+/*add this to avoid flickering*/
+.plk-dd-inprogess > * {
+    pointer-events: none;
+   /* margin-top: 1vw;
+    margin-right: 1vw;
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    border: dashed 2px silver;*/
+}
+
+/*dropzone style style*/
+.plk-dd-dropzone {
+    min-height: 50px;
+}
+.plk-dd-draggable {
+    margin: 8px;
+}
+
+.plk-dd-spacing {
+    height: 10px;
+}
+
+.xplk-dd-inprogess {
+  
+}
+
+.plk-dd-dragged-over {
+    /*opacity: 0.6;*/
+    animation: blinker 1s linear infinite;
+}
+
+.plk-dd-dragged-over > div {
+    
+
+    /*opacity: 0.6;
+    animation: blinker 1s linear infinite;*/
+}
+
+.plk-dd-dragged-over-denied {
+    background-color: red;
+    opacity: 0.6;
+    animation: blinker 1s linear infinite;
+}
+
+.plk-dd-in-transit {
+    opacity: 0.6;
+}
+
+.plk-dd-in-transit > div {
+    opacity: 0;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blink_me {
+    animation: blinker 1s linear infinite;
+}
