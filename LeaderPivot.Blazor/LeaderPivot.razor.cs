@@ -22,13 +22,13 @@ namespace LeaderPivot.Blazor
 
         public List<Dimension<T>> RowDimensions 
         {
-            get => Dimensions.Where(x => x.IsRow).OrderBy(x => x.Sequence).ToList(); 
+            get => Dimensions.Where(x => x.IsEnabled && x.IsRow).OrderBy(x => x.Sequence).ToList(); 
             set => _ = value; 
         }
 
         public List<Dimension<T>> ColumnDimensions 
         { 
-            get => Dimensions.Where(x => !x.IsRow).OrderBy(x => x.Sequence).ToList(); 
+            get => Dimensions.Where(x => x.IsEnabled && !x.IsRow).OrderBy(x => x.Sequence).ToList(); 
             set => _ = value; 
         }
 
@@ -93,13 +93,27 @@ namespace LeaderPivot.Blazor
 
         public void DimensionsChanged(Tuple<List<Dimension<T>>, bool> args)
         {
+            List<Dimension<T>> enabledDimensions = Dimensions.Where(x => x.IsEnabled).ToList();
+            int sequence = 0;
+            string draggedDim = null; 
+
             foreach (Dimension<T> dim in args.Item1)
             {
-                Dimension<T> target = Dimensions.First(x => x.ID == dim.ID);
-                target.Sequence = dim.Sequence;
-                target.IsRow = dim.IsRow;
+                if (dim.IsRow != args.Item2)
+                    draggedDim = dim.ID; // this dimension was dragged across axis
+
+                dim.Sequence = sequence++;
+                dim.IsRow = args.Item2;
             }
-            
+
+            // if we have exactly two enabled dimensions, find the other dimension and make
+            // sure it's axis is different than the dimension that was dragged.
+
+            if (enabledDimensions.Count == 2 && ! string.IsNullOrEmpty(draggedDim))
+            {
+                Dimension<T> other = enabledDimensions.First(x => x.ID != draggedDim);
+                other.IsRow = ! args.Item2;
+            }
             RenderTable();
         }
     }

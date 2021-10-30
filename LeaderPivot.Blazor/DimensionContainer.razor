@@ -42,14 +42,5 @@
         await RenderTable.InvokeAsync(null);
     }
 
-    public void OnItemDrop(Dimension<T> dim)
-    {
-        for (int i = 0; i < Dimensions.Count; i++)
-        {
-            Dimensions[i].Sequence = i;
-            Dimensions[i].IsRow = IsRows;
-        }
-        
-        DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, IsRows));
-    }
+    public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, IsRows));
 }
