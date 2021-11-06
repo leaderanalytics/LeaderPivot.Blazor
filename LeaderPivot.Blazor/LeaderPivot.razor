@@ -4,6 +4,11 @@
 @inherits BaseComponent
 
 <div class="@PivotStyle.Container">
+    @if (!(Matrix?.Rows?.Any() ?? false))
+    { 
+        <label>NO DATA</label>
+    }
+
     <table class="@PivotStyle.Table" height="1px" style="@PivotStyle.TableStyle"> @*1px height required to make control div expand to 100% height.*@
         @if (Matrix?.Rows?.Any() ?? false)
         {

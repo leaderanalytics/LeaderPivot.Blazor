@@ -18,7 +18,7 @@ namespace LeaderPivot.Blazor
         [Parameter] public bool DisplayDimensionButtons { get; set; }
         [Parameter] public bool DisplayMeasureSelectors { get; set; }
         [Parameter] public bool DisplayReloadDataButton { get; set; }
-        [Parameter] public Func<PagedQueryArgs, PagedQueryResult<T>> DataSource { get; set; }
+        [Parameter] public Func<Task<IEnumerable<T>>> DataSource { get; set; }
 
         public List<Dimension<T>> RowDimensions 
         {
@@ -36,7 +36,7 @@ namespace LeaderPivot.Blazor
 
         public Matrix Matrix { get; set; }
         private MatrixBuilder<T> matrixBuilder;
-        private List<T> Data;
+        private IEnumerable<T> Data;
 
         public LeaderPivot()
         {
@@ -45,22 +45,18 @@ namespace LeaderPivot.Blazor
             matrixBuilder = new MatrixBuilder<T>(nodeBuilder, validator);
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            if (PivotStyle == null)
+                PivotStyle = new LeaderPivotStyle();
 
-            if (firstRender)
-            {
-                if (PivotStyle == null)
-                    PivotStyle = new LeaderPivotStyle();
-                
-                await ReloadData();
-            }
+            await ReloadData();
+            await base.OnInitializedAsync();
         }
 
         public async Task ReloadData()
         {
-            Data = DataSource(new PagedQueryArgs()).Data;
+            Data = await DataSource();
             RenderTable();
         }
 
