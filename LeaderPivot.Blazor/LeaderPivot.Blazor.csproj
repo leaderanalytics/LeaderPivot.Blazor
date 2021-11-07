@@ -8,10 +8,10 @@
     <Authors>Leader Analytics</Authors>
     <Company>Leader Analytics</Company>
     <Product>LeaderAnalytics.LeaderPivot.Blazor</Product>
-    <Description>Leader Analytics Pivot table for Blazor applications</Description>
+    <Description>Pivot table control for Blazor applications</Description>
     <Copyright>2021 Leader Analytics</Copyright>
     <PackageProjectUrl>https://github.com/leaderanalytics/LeaderPivot.Blazor</PackageProjectUrl>
-    <PackageIcon>logo-xsmall.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/leaderanalytics/LeaderPivot.Blazor</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Leader Analytics LeaderAnalytics Pivot Table Matrix Blazor</PackageTags>
@@ -38,11 +38,12 @@
 
   <ItemGroup>
     <PackageReference Include="blazor-dragdrop" Version="2.3.0" />
+    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.9-beta.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\logo-xsmall.png" Pack="true" PackagePath="\" />
+    <None Include="..\icon.png" Pack="true" PackagePath="\" />
     <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
     <None Include="compilerconfig.json" />
   </ItemGroup>
@@ -51,15 +52,16 @@
     <Folder Include="wwwroot\css\open-iconic\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\LeaderPivot\LeaderPivot\LeaderPivot.csproj" />
-  </ItemGroup>
+  <PropertyGroup>
+    <RootNamespace>LeaderAnalytics.LeaderPivot.Blazor</RootNamespace>
+    <AssemblyName>LeaderAnalytics.LeaderPivot.Blazor</AssemblyName>
+  </PropertyGroup>  
 
-  <Target Name="CopyPackage" AfterTargets="Pack">
+
+  <Target Name="CopyPackage" AfterTargets="Pack" Condition=" '$(Configuration)'=='Debug' ">
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\NugetPackages\" />
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="c:\NugetPackages\" />
   </Target>
-
-
 
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
