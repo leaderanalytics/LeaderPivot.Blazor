@@ -27,7 +27,7 @@ Add LeaderPivot to your [dependency injection container](https://github.com/lead
 
 `builder.Services.AddLeaderPivot();`
 
-Add css to `index.html`:
+Add css to [`index.html`](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/LeaderPivot.BlazorDemo/wwwroot/index.html):
 
     
         <link href="LeaderPivot.BlazorDemo.styles.css" rel="stylesheet" />
