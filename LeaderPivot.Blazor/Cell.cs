@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
 
-namespace LeaderPivot.Blazor
+namespace LeaderAnalytics.LeaderPivot.Blazor
 {
     public abstract class Cell : BaseComponent
     {

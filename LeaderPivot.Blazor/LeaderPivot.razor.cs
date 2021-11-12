@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using LeaderAnalytics.LeaderPivot;
 
-namespace LeaderPivot.Blazor
+namespace LeaderAnalytics.LeaderPivot.Blazor
 {
     public partial class LeaderPivot<T> : BaseComponent
     {

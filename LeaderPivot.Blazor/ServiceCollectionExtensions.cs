@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeaderPivot.Blazor
+namespace LeaderAnalytics.LeaderPivot.Blazor
 {
     public static class ServiceCollectionExtensions
     {
