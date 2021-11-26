@@ -32,7 +32,7 @@ A pivot table control for Blazor.
 * Add css to [`index.html`](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/LeaderPivot.BlazorDemo/wwwroot/index.html):
 
     
-        <link href="LeaderPivot.BlazorDemo.styles.css" rel="stylesheet" />
+       
         <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/leader-pivot.css" rel="stylesheet" />
         <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/LeaderAnalytics.LeaderPivot.Blazor.bundle.scp.css" rel="stylesheet" />
         <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/css/bootstrap-4.1.3-dist/css/bootstrap.min.css" rel="stylesheet" />
