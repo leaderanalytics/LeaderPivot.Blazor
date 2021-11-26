@@ -4,7 +4,7 @@
 
 
 
-<Dropzone TItem="Dimension<T>" Items="Dimensions" OnItemDrop="@((p) => OnItemDrop(p))" MaxItems="MaxDimensions" Class="d-flex flex-row flex-wrap"  >
+<Dropzone TItem="Dimension<T>" Items="Dimensions" OnItemDrop="@((p) => OnItemDrop(p))" MaxItems="MaxDimensions" Class="leader-pivot-d-flex leader-pivot-flex-row leader-pivot-flex-wrap"  >
     @{Dimension<T> tmpDim = context;}
         
     <button class="@PivotStyle.DimensionButton" @onclick="@(x => DimensionClicked(tmpDim.DisplayValue))">

@@ -23,8 +23,8 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             LeaderPivotStyle light = new LeaderPivotStyle
             {
                 StyleName = "Light",
-                Container = "leader-pivot-container leader-pivot-container-light",
-                Table = "table table-light table-bordered",
+                Container = "leader-pivot-container-light",
+                Table = "leader-pivot-table-light leader-pivot-table",
                 MeasureCell = "leader-pivot-measure-cell",
                 TotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-light",
                 GrandTotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-light",
@@ -32,10 +32,10 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
                 TotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-light",
                 GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-light",
                 MeasureHeaderCell = "leader-pivot-header-cell",
-                DimensionButton = "btn btn-outline-secondary btn-sm shadow",
-                ReloadButton = "btn btn-outline-secondary btn-sm shadow",
-                GroupHeaderButton = "btn btn-sm rounded-circle groupheader-button groupheader-button-black",
-                CheckBoxLabel = "form-check-label",
+                DimensionButton = "leader-pivot-btn leader-pivot-btn-outline-light leader-pivot-btn-sm leader-pivot-shadow",
+                ReloadButton = "leader-pivot-btn leader-pivot-btn-outline-light leader-pivot-btn-sm leader-pivot-shadow",
+                GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-black",
+                CheckBoxLabel = "leader-pivot-form-check-label",
                 CheckBox = "slider round slider-light"
             };
             Styles.Add(light);
@@ -44,8 +44,8 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             LeaderPivotStyle secondary = new LeaderPivotStyle
             {
                 StyleName = "Secondary",
-                Container = "leader-pivot-container leader-pivot-container-secondary",
-                Table = "table table-bordered-secondary",
+                Container = "leader-pivot-container-secondary",
+                Table = "leader-pivot-table-bordered-secondary leader-pivot-table",
                 MeasureCell = "leader-pivot-measure-cell",
                 TotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-secondary",
                 GrandTotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-secondary",
@@ -53,10 +53,10 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
                 TotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-secondary",
                 GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-secondary",
                 MeasureHeaderCell = "leader-pivot-header-cell",
-                DimensionButton = "btn btn-secondary btn-sm shadow",
-                ReloadButton = "btn btn-secondary btn-sm shadow",
-                GroupHeaderButton = "btn btn-sm rounded-circle groupheader-button groupheader-button-black",
-                CheckBoxLabel = "form-check-label",
+                DimensionButton = "leader-pivot-btn leader-pivot-btn-secondary leader-pivot-btn-sm leader-pivot-shadow",
+                ReloadButton = "leader-pivot-btn leader-pivot-btn-secondary leader-pivot-btn-sm leader-pivot-shadow",
+                GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-black",
+                CheckBoxLabel = "leader-pivot-form-check-label",
                 CheckBox = "slider round slider-secondary"
             };
             Styles.Add(secondary);
@@ -65,8 +65,8 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             LeaderPivotStyle dark = new LeaderPivotStyle
             {
                 StyleName = "Dark",
-                Container = "leader-pivot-container leader-pivot-container-dark",
-                Table = "table table-bordered-dark",
+                Container = "leader-pivot-container-dark",
+                Table = "leader-pivot-table-bordered-dark leader-pivot-table",
                 MeasureCell = "leader-pivot-measure-cell",
                 TotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-dark",
                 GrandTotalCell = "leader-pivot-measure-cell leader-pivot-total-cell-bg-dark",
@@ -74,10 +74,10 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
                 TotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-dark",
                 GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-dark",
                 MeasureHeaderCell = "leader-pivot-header-cell",
-                DimensionButton = "btn btn-dark btn-sm shadow",
-                ReloadButton = "btn btn-dark btn-sm shadow",
-                GroupHeaderButton = "btn btn-sm rounded-circle groupheader-button groupheader-button-white",
-                CheckBoxLabel = "form-check-label",
+                DimensionButton = "leader-pivot-btn leader-pivot-btn-dark leader-pivot-btn-sm leader-pivot-shadow-dark",
+                ReloadButton = "leader-pivot-btn leader-pivot-btn-dark leader-pivot-btn-sm leader-pivot-shadow-dark",
+                GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-white",
+                CheckBoxLabel = "leader-pivot-form-check-label",
                 CheckBox = "slider round slider-secondary"
             };
             Styles.Add(dark);

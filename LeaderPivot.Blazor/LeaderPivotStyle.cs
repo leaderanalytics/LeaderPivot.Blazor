@@ -36,12 +36,12 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         }
         public string Container
         {
-            get => !string.IsNullOrEmpty(_Container) ? _Container : "leader-pivot-container leader-pivot-container-primary";
+            get => !string.IsNullOrEmpty(_Container) ? _Container : "leader-pivot-container-primary";
             set => _Container = value;
         }
         public string Table 
         {
-            get => !string.IsNullOrEmpty(_Table) ? _Table : "table table-bordered leader-pivot-table"; 
+            get => !string.IsNullOrEmpty(_Table) ? _Table : "leader-pivot-table"; 
             set => _Table = value;
         }
         public string MeasureCell
@@ -81,18 +81,18 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         }
         public string DimensionButton
         {
-            get => !string.IsNullOrEmpty(_DimensionButton) ? _DimensionButton : "btn btn-primary btn-sm shadow";
+            get => !string.IsNullOrEmpty(_DimensionButton) ? _DimensionButton : "leader-pivot-btn leader-pivot-btn-primary leader-pivot-btn-sm leader-pivot-shadow";
             set => _DimensionButton = value;
         }
         public string ReloadButton
         {
-            get => !string.IsNullOrEmpty(_ReloadButton) ? _ReloadButton : "btn btn-primary btn-sm shadow";
+            get => !string.IsNullOrEmpty(_ReloadButton) ? _ReloadButton : "leader-pivot-btn leader-pivot-btn-primary leader-pivot-btn-sm leader-pivot-shadow";
             set => _ReloadButton = value;
         }
 
         public string GroupHeaderButton
         {
-            get => !string.IsNullOrEmpty(_GroupHeaderButton) ? _GroupHeaderButton : "btn btn-sm rounded-circle groupheader-button groupheader-button-black";
+            get => !string.IsNullOrEmpty(_GroupHeaderButton) ? _GroupHeaderButton : "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-black";
             set => _GroupHeaderButton = value;
         }
 

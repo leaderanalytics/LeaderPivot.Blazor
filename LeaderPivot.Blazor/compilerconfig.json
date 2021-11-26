@@ -4,10 +4,6 @@
     "inputFile": "wwwroot/leader-pivot.scss"
   },
   {
-    "outputFile": "Component1.razor.css",
-    "inputFile": "Component1.razor.scss"
-  },
-  {
     "outputFile": "LeaderPivot.razor.css",
     "inputFile": "LeaderPivot.razor.scss"
   }

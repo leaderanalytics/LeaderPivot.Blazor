@@ -3,13 +3,13 @@
 @typeparam T
 @inherits BaseComponent
 
-<div class="@PivotStyle.Container">
+<div class="@(PivotStyle.Container) leader-pivot-container">
     @if (!(Matrix?.Rows?.Any() ?? false))
     { 
         <label>NO DATA</label>
     }
 
-    <table class="@PivotStyle.Table" height="1px" style="@PivotStyle.TableStyle"> @*1px height required to make control div expand to 100% height.*@
+    <table class="@(PivotStyle.Table) " height="1px" style="@PivotStyle.TableStyle"> @*1px height required to make control div expand to 100% height.*@
         @if (Matrix?.Rows?.Any() ?? false)
         {
             @foreach (var row in Matrix.Rows.Select((x, y) => new { Item = x, Index = y }))
@@ -39,19 +39,19 @@
                                     
                                 @if (row.Index == 0 && c.Index == 0)
                                 {
-                                    <div class="d-flex flex-column justify-space-between flex-grow-1 flex-fill" Style="height:100%;">
+                                    <div class="leader-pivot-d-flex leader-pivot-flex-column leader-pivot-justify-space-between leader-pivot-flex-grow-1 leader-pivot-flex-fill" Style="height:100%;">
 
-                                        <button hidden="@(!DisplayReloadDataButton)" class="@PivotStyle.ReloadButton" style="width:120px;" @onclick="@(async x => await ReloadData())">
+                                        <button hidden="@(!DisplayReloadDataButton)" class="@PivotStyle.ReloadButton" style="width:120px;margin-bottom:2px;" @onclick="@(async x => await ReloadData())">
                                             <span class="oi oi-reload" title="Reload Data" aria-hidden="true" style="margin-right:4px;"></span>
                                             Reload Data
                                         </button>
 
-                                        <div hidden="@(!DisplayMeasureSelectors)" class="mt-2 flex-column">
+                                        <div hidden="@(!DisplayMeasureSelectors)" class="leader-pivot-mt-2 leader-pivot-flex-column">
 
                                             @foreach (var measure in Measures)
                                             {
-                                                <div class="d-flex">
-                                                    <label class="switch mb-1">
+                                                <div class="leader-pivot-d-flex">
+                                                    <label class="switch leader-pivot-mb-1">
                                                         <input type="checkbox" checked="@(measure.IsEnabled)" @onchange="@(x => MeasureCheckedChanged(measure, x))" />
                                                         <span class="@PivotStyle.CheckBox"></span>
                                                         <label class="@PivotStyle.CheckBoxLabel">@measure.DisplayValue</label>
@@ -60,8 +60,8 @@
                                             }
                                         </div>
 
-                                        <div hidden="@(!DisplayGrandTotalOption)" class="flex-row">
-                                            <label  class="switch mb-1 w-100" >
+                                        <div hidden="@(!DisplayGrandTotalOption)" class="leader-pivot-flex-row">
+                                            <label  class="switch leader-pivot-mb-1 leader-pivot-w-100" >
                                                 <input type="checkbox" checked="@(DisplayGrandTotals)" @onchange="@(x => GrandTotalsCheckedChanged())" />
                                                 <span class="@PivotStyle.CheckBox"></span>
                                                 <label class="@PivotStyle.CheckBoxLabel">Grand Totals</label>
@@ -70,7 +70,7 @@
                                     
                                         @if (DisplayDimensionButtons)
                                         {
-                                            <div class="d-flex mt-auto" >
+                                            <div class="leader-pivot-d-flex leader-pivot-mt-auto" >
                                                 <DimensionContainer T="T" Dimensions="RowDimensions" RenderTable="RenderTable" DimensionsChanged="DimensionsChanged"  MaxDimensions="MaxDimensionsPerAxis" IsRows="true" PivotStyle="@PivotStyle"></DimensionContainer>
                                             </div>
                                         }
@@ -78,7 +78,7 @@
                                 }
                                 else if (row.Index == 0 && c.Index == 1 && DisplayDimensionButtons)
                                 {
-                                    <div class="d-flex align-self-center" style="margin-top:-1vh;">
+                                    <div class="leader-pivot-d-flex leader-pivot-align-self-center" style="margin-top:-1vh;">
                                         <DimensionContainer T="T" Dimensions="ColumnDimensions" RenderTable="RenderTable" DimensionsChanged="DimensionsChanged" MaxDimensions="MaxDimensionsPerAxis" IsRows="false" PivotStyle="@PivotStyle"></DimensionContainer>  
                                     </div>
                                 }

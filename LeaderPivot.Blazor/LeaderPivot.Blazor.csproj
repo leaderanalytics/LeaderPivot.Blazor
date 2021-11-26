@@ -38,8 +38,8 @@
 
   <ItemGroup>
     <PackageReference Include="blazor-dragdrop" Version="2.3.0" />
-    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.12-beta.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.11" />
+    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.14-beta.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,17 +48,16 @@
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\open-iconic\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <RootNamespace>LeaderAnalytics.LeaderPivot.Blazor</RootNamespace>
     <AssemblyName>LeaderAnalytics.LeaderPivot.Blazor</AssemblyName>
-  </PropertyGroup>  
+  </PropertyGroup>
 
+	<ItemGroup>
+		<None Update="Pages/*.razor.css" CssScope="leader-pivot-blazor" />
+	</ItemGroup>
 
-  <Target Name="CopyPackage" AfterTargets="Pack" Condition=" '$(Configuration)'=='Debug' ">
+	<Target Name="CopyPackage" AfterTargets="Pack" Condition=" '$(Configuration)'=='Debug' ">
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\NugetPackages\" />
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="c:\NugetPackages\" />
   </Target>
