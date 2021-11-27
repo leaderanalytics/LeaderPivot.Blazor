@@ -34,7 +34,5 @@ A pivot table control for Blazor.
     
        
         <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/leader-pivot.css" rel="stylesheet" />
-        <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/LeaderAnalytics.LeaderPivot.Blazor.bundle.scp.css" rel="stylesheet" />
-        <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/css/bootstrap-4.1.3-dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/css/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+      
     
