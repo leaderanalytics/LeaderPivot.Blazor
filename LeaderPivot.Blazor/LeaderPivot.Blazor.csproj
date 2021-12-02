@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>  
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -38,8 +39,8 @@
 
   <ItemGroup>
     <PackageReference Include="blazor-dragdrop" Version="2.3.0" />
-    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.14-beta.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
+    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.15-beta.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

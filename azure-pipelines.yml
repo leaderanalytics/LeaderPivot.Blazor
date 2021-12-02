@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- main
+- release/*
 
 pool:
   vmImage: 'windows-latest'
@@ -17,9 +17,15 @@ variables:
   major: 1
   minor: 0
   patch: $[counter(variables['minor'], 1)] #this will reset when we bump minor
-  NugetVersion: $(major).$(minor).$(patch)-beta.1
+  NugetVersion: $(major).$(minor).$(patch)-beta.2
 
 steps:
+
+- task: UseDotNet@2
+  displayName: 'Use dotnet 6'
+  inputs:
+    version: '6.x'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
