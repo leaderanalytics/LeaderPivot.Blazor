@@ -52,7 +52,7 @@
                                             {
                                                 <div class="leader-pivot-d-flex">
                                                     <label class="switch leader-pivot-mb-1">
-                                                        <input type="checkbox" checked="@(measure.IsEnabled)" @onchange="@(x => MeasureCheckedChanged(measure, x))" />
+                                                        <input type="checkbox" checked="@(measure.IsEnabled)" disabled="@(IsMeasureCheckBoxDisabled(measure))"  @onchange="@(x => MeasureCheckedChanged(measure, x))" />
                                                         <span class="@PivotStyle.CheckBox"></span>
                                                         <label class="@PivotStyle.CheckBoxLabel">@measure.DisplayValue</label>
                                                     </label>

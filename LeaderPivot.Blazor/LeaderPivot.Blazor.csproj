@@ -17,7 +17,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Leader Analytics LeaderAnalytics Pivot Table Matrix Blazor</PackageTags>
     <PackageReleaseNotes>See Repository</PackageReleaseNotes>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.2-beta.1</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <PackageId>LeaderAnalytics.LeaderPivot.Blazor</PackageId>

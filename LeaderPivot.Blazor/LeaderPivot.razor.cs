@@ -70,7 +70,7 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             Matrix = matrixBuilder.ToggleNodeExpansion(nodeID);
         }
 
-        public void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
+        public async void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
         {
             bool option = (bool)e.Value;
 
@@ -78,7 +78,18 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             {
                 measure.IsEnabled = option;
             }
+            else
+            {
+                measure.IsEnabled = !option;
+                StateHasChanged();
+                await Task.Delay(1);
+            }
             RenderTable();
+        }
+
+        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) 
+        {
+            return measure.IsEnabled && Measures.Count(x => x.IsEnabled) == 1;
         }
 
         public void GrandTotalsCheckedChanged()
