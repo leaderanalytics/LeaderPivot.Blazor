@@ -37,4 +37,5 @@ A pivot table control for Blazor.
        
         <link href="_content/LeaderAnalytics.LeaderPivot.Blazor/leader-pivot.css" rel="stylesheet" />
       
-    
+
+[LeaderPivot WPF implementation is available here](https://github.com/leaderanalytics/LeaderPivot.XAML.WPF)
