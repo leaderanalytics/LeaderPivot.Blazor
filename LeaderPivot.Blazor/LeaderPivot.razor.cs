@@ -87,10 +87,8 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             RenderTable();
         }
 
-        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) 
-        {
-            return measure.IsEnabled && Measures.Count(x => x.IsEnabled) == 1;
-        }
+        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
+        
 
         public void GrandTotalsCheckedChanged()
         {

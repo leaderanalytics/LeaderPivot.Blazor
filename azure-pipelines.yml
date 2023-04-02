@@ -10,21 +10,17 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  project: '**/LeaderPivot.Blazor.csproj'
+  project: 'LeaderPivot.Blazor/LeaderPivot.Blazor.csproj'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  major: 1
-  minor: 0
-  patch: $[counter(variables['minor'], 1)] #this will reset when we bump minor
-  NugetVersion: $(major).$(minor).$(patch)-beta.2
 
 steps:
 
 - task: UseDotNet@2
-  displayName: 'Use dotnet 6'
+  displayName: 'Use dotnet 7'
   inputs:
-    version: '6.x'
+    version: '7.x'
 
 - task: NuGetToolInstaller@1
 
@@ -42,13 +38,11 @@ steps:
 
 
 - task: DotNetCoreCLI@2
-  displayName: "dotnet pack"
+  displayName: 'dotnet pack'
   inputs:
-    command: 'pack'
-    arguments: '--configuration $(buildConfiguration)'
-    packagesToPack: $(project)
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'NugetVersion'
+    command: 'custom'
+    custom: 'pack'
+    arguments: '$(project) /p:PublicRelease=true --no-build --include-symbols --include-source -c=Release -o $(build.artifactstagingdirectory)'
 
   
 - task: NuGetCommand@2

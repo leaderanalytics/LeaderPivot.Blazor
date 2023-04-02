@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>  
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
@@ -17,11 +17,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Leader Analytics LeaderAnalytics Pivot Table Matrix Blazor</PackageTags>
     <PackageReleaseNotes>See Repository</PackageReleaseNotes>
-    <Version>1.0.2-beta.1</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
     <PackageId>LeaderAnalytics.LeaderPivot.Blazor</PackageId>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageOutputPath>C:\\NugetPackages</PackageOutputPath>  
   </PropertyGroup>
   
   
@@ -39,8 +37,8 @@
 
   <ItemGroup>
     <PackageReference Include="blazor-dragdrop" Version="2.3.0" />
-    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.0.16-beta.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
+    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,11 +55,6 @@
 	<ItemGroup>
 		<None Update="Pages/*.razor.css" CssScope="leader-pivot-blazor" />
 	</ItemGroup>
-
-	<Target Name="CopyPackage" AfterTargets="Pack" Condition=" '$(Configuration)'=='Debug' ">
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\NugetPackages\" />
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="c:\NugetPackages\" />
-  </Target>
 
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
