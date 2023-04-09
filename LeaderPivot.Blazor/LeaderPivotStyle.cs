@@ -81,7 +81,7 @@ public class LeaderPivotStyle
     }
     public string ReloadButton
     {
-        get => !string.IsNullOrEmpty(_ReloadButton) ? _ReloadButton : "leader-pivot-btn leader-pivot-btn-primary leader-pivot-btn-sm leader-pivot-shadow";
+        get => !string.IsNullOrEmpty(_ReloadButton) ? _ReloadButton : "leader-pivot-btn leader-pivot-btn-primary leader-pivot-btn-sm";
         set => _ReloadButton = value;
     }
 
