@@ -26,6 +26,11 @@
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
+  
+  
+  <ItemGroup>
+    <None Remove="selectJs.js" />
+  </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\leader-pivot.css" />
@@ -45,6 +50,9 @@
     <None Include="..\icon.png" Pack="true" PackagePath="\" />
     <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
     <None Include="compilerconfig.json" />
+    <None Include="wwwroot\scripts.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <PropertyGroup>

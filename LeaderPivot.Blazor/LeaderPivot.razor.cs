@@ -18,6 +18,7 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         [Parameter] public bool DisplayDimensionButtons { get; set; }
         [Parameter] public bool DisplayMeasureSelectors { get; set; }
         [Parameter] public bool DisplayReloadDataButton { get; set; }
+        [Parameter] public bool DisplayHiddenDimSelector { get; set; }
         [Parameter] public Func<Task<IEnumerable<T>>> DataSource { get; set; }
 
         public List<Dimension<T>> RowDimensions 
@@ -31,6 +32,14 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             get => Dimensions.Where(x => x.IsEnabled && !x.IsRow).OrderBy(x => x.Sequence).ToList(); 
             set => _ = value; 
         }
+
+        public List<Dimension<T>> HiddenDimensions
+        {
+            get => Dimensions.Where(x => !x.IsEnabled).OrderBy(x => x.IsRow).ThenBy(x => x.Sequence).ToList();
+            set => _ = value;
+        }
+
+
 
         public int MaxDimensionsPerAxis => Dimensions.Count == 2 ? 2 : Dimensions.Count - 1;
 
@@ -70,31 +79,11 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             Matrix = matrixBuilder.ToggleNodeExpansion(nodeID);
         }
 
-        public async void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
-        {
-            bool option = (bool)e.Value;
-
-            if (!(!option && Measures.Count(x => x.IsEnabled) == 1))
-            {
-                measure.IsEnabled = option;
-            }
-            else
-            {
-                measure.IsEnabled = !option;
-                StateHasChanged();
-                await Task.Delay(1);
-            }
-            RenderTable();
-        }
-
-        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
         
 
-        public void GrandTotalsCheckedChanged()
-        {
-            DisplayGrandTotals = !DisplayGrandTotals;
-            RenderTable();
-        }
+        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
+
+        
 
         public void DimensionsChanged(Tuple<List<Dimension<T>>, bool> args)
         {
@@ -119,6 +108,12 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
                 Dimension<T> other = enabledDimensions.First(x => x.ID != draggedDim);
                 other.IsRow = ! args.Item2;
             }
+            RenderTable();
+        }
+
+        public async Task GrandTotalsCheckedChanged(bool arg)
+        {
+            DisplayGrandTotals = arg;
             RenderTable();
         }
     }

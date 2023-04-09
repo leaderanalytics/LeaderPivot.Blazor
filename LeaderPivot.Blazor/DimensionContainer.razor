@@ -30,11 +30,6 @@
     [Parameter] public int MaxDimensions { get; set; }
     [Parameter] public bool IsRows { get; set; }
 
-    public DimensionContainer()
-    {
-        Dimensions = new List<Dimension<T>>();
-    }
-
     public async Task DimensionClicked(string id)
     {
         Dimension<T> dim = Dimensions.First(x => x.DisplayValue == id);
@@ -43,4 +38,6 @@
     }
 
     public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, IsRows));
+
+    
 }

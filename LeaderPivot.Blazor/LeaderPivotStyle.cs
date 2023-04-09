@@ -22,6 +22,7 @@ public class LeaderPivotStyle
     private string _FontSize;
     private string _CellStyle;
     private string _TableStyle;
+    private string _HiddenDimSelector;
 
     public string StyleName
     {
@@ -130,4 +131,11 @@ public class LeaderPivotStyle
         get => !string.IsNullOrEmpty(_TableStyle) ? _TableStyle : $"font-size:{(UseResponsiveSizing ? ("calc(5pt + " + FontSize + "vw)") : (FontSize + "pt"))};";
         set => _TableStyle = value;
     }
+
+    public string HiddenDimSelector
+    {
+        get => !string.IsNullOrEmpty(_HiddenDimSelector) ? _HiddenDimSelector : $"form-control leader-pivot-select leader-pivot-btn-primary leader-pivot-btn-sm";
+        set => _HiddenDimSelector = value;
+    }
 }
+
