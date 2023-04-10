@@ -27,10 +27,11 @@ public static class LeaderPivotStyles
             GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-light",
             MeasureHeaderCell = "leader-pivot-header-cell",
             DimensionButton = "leader-pivot-btn leader-pivot-btn-outline-light leader-pivot-btn-sm leader-pivot-shadow",
-            ReloadButton = "leader-pivot-btn leader-pivot-btn-outline-light leader-pivot-btn-sm leader-pivot-shadow",
+            ReloadButton = "leader-pivot-btn leader-pivot-btn-outline-light leader-pivot-btn-sm ",
             GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-black",
             CheckBoxLabel = "leader-pivot-form-check-label",
-            CheckBox = "slider round slider-light"
+            CheckBox = "slider round slider-light",
+            HiddenDimSelector = "form-control leader-pivot-select leader-pivot-btn-outline-light leader-pivot-btn-sm"
         };
         Styles.Add(light);
 
@@ -48,10 +49,11 @@ public static class LeaderPivotStyles
             GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-secondary",
             MeasureHeaderCell = "leader-pivot-header-cell",
             DimensionButton = "leader-pivot-btn leader-pivot-btn-secondary leader-pivot-btn-sm leader-pivot-shadow",
-            ReloadButton = "leader-pivot-btn leader-pivot-btn-secondary leader-pivot-btn-sm leader-pivot-shadow",
+            ReloadButton = "leader-pivot-btn leader-pivot-btn-secondary leader-pivot-btn-sm ",
             GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-black",
             CheckBoxLabel = "leader-pivot-form-check-label",
-            CheckBox = "slider round slider-secondary"
+            CheckBox = "slider round slider-secondary",
+            HiddenDimSelector = "form-control leader-pivot-select leader-pivot-btn-secondary leader-pivot-btn-sm"
         };
         Styles.Add(secondary);
 
@@ -69,10 +71,11 @@ public static class LeaderPivotStyles
             GrandTotalHeaderCell = "leader-pivot-header-cell leader-pivot-total-cell-bg-dark",
             MeasureHeaderCell = "leader-pivot-header-cell",
             DimensionButton = "leader-pivot-btn leader-pivot-btn-dark leader-pivot-btn-sm leader-pivot-shadow-dark",
-            ReloadButton = "leader-pivot-btn leader-pivot-btn-dark leader-pivot-btn-sm leader-pivot-shadow-dark",
+            ReloadButton = "leader-pivot-btn leader-pivot-btn-dark leader-pivot-btn-sm",
             GroupHeaderButton = "leader-pivot-btn leader-pivot-btn-sm leader-pivot-rounded-circle groupheader-button groupheader-button-white",
             CheckBoxLabel = "leader-pivot-form-check-label",
-            CheckBox = "slider round slider-secondary"
+            CheckBox = "slider round slider-secondary",
+            HiddenDimSelector = "form-control leader-pivot-select leader-pivot-btn-dark leader-pivot-btn-sm"
         };
         Styles.Add(dark);
     }

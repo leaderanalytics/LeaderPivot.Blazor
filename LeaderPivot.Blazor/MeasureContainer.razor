@@ -1,0 +1,141 @@
+﻿@namespace LeaderAnalytics.LeaderPivot.Blazor
+@using LeaderAnalytics.LeaderPivot 
+@typeparam T
+@inherits BaseComponent
+
+<div class="leader-pivot-d-flex leader-pivot-flex-column leader-pivot-justify-space-between leader-pivot-flex-grow-1 leader-pivot-flex-fill" Style="height:100%;">
+
+    <button hidden="@(!DisplayReloadDataButton)" class="@PivotStyle.ReloadButton" style="width:120px;margin-bottom:2px;" @onclick="@(async x => await OnReloadData())">
+        <span class="oi oi-reload" title="Reload Data" aria-hidden="true" style="margin-right:4px;"></span>
+        Reload Data
+    </button>
+
+    <div hidden="@(!DisplayMeasureSelectors)" class="leader-pivot-mt-2 leader-pivot-flex-column">
+
+        @foreach (var measure in Measures)
+        {
+            <div class="leader-pivot-d-flex">
+                <label class="switch leader-pivot-mb-1">
+                    <input type="checkbox" checked="@(measure.IsEnabled)" disabled="@(! measure.CanDisable)" @onchange="@(x => MeasureCheckedChanged(measure, x))" />
+                    <span class="@PivotStyle.CheckBox"></span>
+                    <label class="@PivotStyle.CheckBoxLabel">@measure.DisplayValue</label>
+                </label>
+            </div>
+        }
+    </div>
+
+    <div hidden="@(!DisplayGrandTotalOption)" class="leader-pivot-flex-row">
+        <label class="switch leader-pivot-mb-1 leader-pivot-w-100">
+            <input type="checkbox" checked="@(DisplayGrandTotals)" @onchange="@(x => OnGrandTotalsCheckChanged(x))" />
+            <span class="@PivotStyle.CheckBox"></span>
+            <label class="@PivotStyle.CheckBoxLabel">Grand Totals</label>
+        </label>
+    </div>
+
+    @if (DisplayDimensionButtons)
+    {
+        <div class="leader-pivot-d-flex leader-pivot-mt-auto">
+            <DimensionContainer T="T" 
+                Dimensions="RowDimensions" 
+                RenderTable="RenderTable" 
+                DimensionsChanged="DimensionsChanged" 
+                MaxDimensions="MaxDimensionsPerAxis" 
+                IsRows="true" 
+                PivotStyle="@PivotStyle">
+            </DimensionContainer>
+        </div>
+    }
+
+    @if (DisplayHiddenDimSelector)
+    {
+        <Dropzone Items="DummyItems" TItem="Dimension<T>" OnItemDrop="@((p) => HideDimension(p))"  >
+            <select @ref="hiddenDimSelect" id="hiddenDimSelect" class="@PivotStyle.HiddenDimSelector" @onchange="ShowDimension">
+                
+                <option value="" selected disabled hidden >Hidden Dimensions</option>
+              
+                @foreach(Dimension<T> dim in HiddenDimensions)
+                {
+                    <option value="@dim.DisplayValue" >@dim.DisplayValue</option>    
+                }
+                
+            </select>   
+        </Dropzone>
+    }
+</div>
+
+
+@code {
+
+    [Parameter] public List<Dimension<T>> RowDimensions { get; set; }
+    [Parameter] public List<Dimension<T>> HiddenDimensions { get; set; }
+    [Parameter] public IEnumerable<Measure<T>> Measures { get; set; }
+    [Parameter] public bool DisplayGrandTotals { get; set; }
+    [Parameter] public bool DisplayGrandTotalOption { get; set; }
+    [Parameter] public bool DisplayDimensionButtons { get; set; }
+    [Parameter] public bool DisplayMeasureSelectors { get; set; }
+    [Parameter] public bool DisplayReloadDataButton { get; set; }
+    [Parameter] public bool DisplayHiddenDimSelector { get; set; }
+
+    [Parameter] public EventCallback ReloadData { get; set; }
+    [Parameter] public EventCallback RenderTable { get; set; }
+    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, bool>> DimensionsChanged { get; set; }
+    [Parameter] public EventCallback<bool> GrandTotalsCheckedChanged { get; set; }
+    [Parameter] public int MaxDimensionsPerAxis { get; set; }
+
+    public async Task OnReloadData() => await ReloadData.InvokeAsync();
+    public async Task OnRenderTable() => await RenderTable.InvokeAsync();
+    public async Task OnDimensioncsChanged(Tuple<List<Dimension<T>>, bool> arg) => await DimensionsChanged.InvokeAsync(arg);
+    public async Task OnGrandTotalsCheckChanged(ChangeEventArgs e) => await GrandTotalsCheckedChanged.InvokeAsync((bool)e.Value);
+    private List<Dimension<T>> DummyItems;
+
+    [Inject] IJSRuntime JSRuntime { get; set; }
+    private Lazy<Task<IJSObjectReference>> moduleTask;
+    private ElementReference hiddenDimSelect;
+    private IJSObjectReference js;
+
+    public MeasureContainer()
+    {
+        DummyItems = new List<Dimension<T>> { new Dimension<T>() }; // Fake collection of one item so the hidden fields dropdown will render in the dropzone.
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/LeaderAnalytics.LeaderPivot.Blazor/scripts.js").AsTask());
+    }
+
+
+
+    public async void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
+    {
+        bool option = (bool)e.Value;
+
+        if (!(!option && Measures.Count(x => x.IsEnabled) == 1))
+            measure.IsEnabled = option;
+        else
+            measure.IsEnabled = !option;
+
+        await OnRenderTable();
+    }
+
+    public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(HiddenDimensions, true));
+
+    private async Task HideDimension(Dimension<T> dim)
+    {
+        DummyItems.Remove(dim);
+        dim.IsEnabled = false;
+        await OnRenderTable();
+    }
+
+    private async Task ShowDimension(ChangeEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.Value?.ToString()))
+            return;
+
+        Dimension<T> dim = HiddenDimensions.First(x => x.DisplayValue == e.Value.ToString());
+        dim.IsEnabled = true;
+        var module = await moduleTask.Value;
+        await module.InvokeVoidAsync("resetSelect", hiddenDimSelect);
+        await OnRenderTable();
+    }
+}
