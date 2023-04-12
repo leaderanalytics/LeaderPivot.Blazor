@@ -89,6 +89,7 @@
     private List<Dimension<T>> DummyItems;
 
     [Inject] IJSRuntime JSRuntime { get; set; }
+    [Inject] NavigationManager NavManager { get; set; }
     private Lazy<Task<IJSObjectReference>> moduleTask;
     private ElementReference hiddenDimSelect;
     private IJSObjectReference js;
@@ -103,10 +104,11 @@
         if (firstRender)
         {
             // https://github.com/dotnet/aspnetcore/issues/47627
-            // /blazor/ prefix is hardcoded here although Blazor should respect it as base in index.html:
+            // AbsolutePath is appended here because Blazor does not respect it as set in index.html:
             // <base href="/blazor/" />
-            // this url works in prod but breaks in dev because base is / in dev.
-            moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", "/blazor/_content/LeaderAnalytics.LeaderPivot.Blazor/scripts.js").AsTask());
+
+            string path = new Uri(NavManager.BaseUri).AbsolutePath + "_content/LeaderAnalytics.LeaderPivot.Blazor/scripts.js";
+            moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", path).AsTask());
         }
     }
 
