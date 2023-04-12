@@ -101,7 +101,13 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-            moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/LeaderAnalytics.LeaderPivot.Blazor/scripts.js").AsTask());
+        {
+            // https://github.com/dotnet/aspnetcore/issues/47627
+            // /blazor/ prefix is hardcoded here although Blazor should respect it as base in index.html:
+            // <base href="/blazor/" />
+            // this url works in prod but breaks in dev because base is / in dev.
+            moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", "/blazor/_content/LeaderAnalytics.LeaderPivot.Blazor/scripts.js").AsTask());
+        }
     }
 
 
