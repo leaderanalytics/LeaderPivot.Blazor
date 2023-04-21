@@ -42,7 +42,7 @@
 
   <ItemGroup>
     <PackageReference Include="blazor-dragdrop" Version="2.3.0" />
-    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.2.0-g0af19f7daa" />
+    <PackageReference Include="LeaderAnalytics.LeaderPivot" Version="1.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.5" />
   </ItemGroup>
 
