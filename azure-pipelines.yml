@@ -67,16 +67,25 @@ steps:
     custom: 'pack'
     arguments: '$(project) /p:PublicRelease=true --no-build --include-symbols --include-source -c=Release -o $(build.artifactstagingdirectory)'
 
-  
-- task: NuGetCommand@2
+- task: AzureKeyVault@2
+  name: KeyVaultSecrets
+  displayName: Get Nuget API key from Key Vault
   inputs:
-    command: 'push'
-    feedsToUse: 'select'
-    vstsFeed: 'LeaderAnalyticsFeed'
-    publishVstsFeed: 'LeaderAnalyticsFeed'
+    azureSubscription: 'All Azure Services'
+    KeyVaultName: 'LeaderAnalyticsVault'
+    SecretsFilter: 'nuget-apikey'
+    RunAsPreJob: false
 
 - task: PowerShell@2
   displayName: "Push package to nuget.org"
   inputs:
     targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget.org_apikey) -Source https://api.nuget.org/v3/index.json'    
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget-apikey) -Source https://api.nuget.org/v3/index.json'    
+
+- task: NuGetCommand@2
+  displayName: 'Push package to leaderanalytics feed'
+  inputs:
+    command: 'push'
+    feedsToUse: 'select'
+    vstsFeed: 'LeaderAnalyticsFeed'
+    publishVstsFeed: 'LeaderAnalyticsFeed'
