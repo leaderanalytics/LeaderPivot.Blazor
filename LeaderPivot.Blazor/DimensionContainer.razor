@@ -24,7 +24,7 @@
 @code {
 
     [Parameter] public List<Dimension<T>> Dimensions { get; set; }
-    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, bool>> DimensionsChanged { get; set; }
+    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, Dimension<T>, DropZone>> DimensionsChanged { get; set; }
     [Parameter] public EventCallback RenderTable { get; set; }
     [Parameter] public LeaderPivotStyle PivotStyle { get; set; }
     [Parameter] public int MaxDimensions { get; set; }
@@ -37,7 +37,5 @@
         await RenderTable.InvokeAsync(null);
     }
 
-    public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, IsRows));
-
-    
+    public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(Dimensions, dim, IsRows ? DropZone.Rows : DropZone.Columns));
 }

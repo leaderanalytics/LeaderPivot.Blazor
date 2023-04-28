@@ -48,7 +48,7 @@
 
     @if (DisplayHiddenDimSelector)
     {
-        <Dropzone Items="DummyItems" TItem="Dimension<T>" OnItemDrop="@((p) => HideDimension(p))"  >
+        <Dropzone Items="DummyItems" TItem="Dimension<T>" OnItemDrop="@(HideDimension)" >
             <select @ref="hiddenDimSelect" id="hiddenDimSelect" class="@PivotStyle.HiddenDimSelector" @onchange="ShowDimension">
                 
                 <option value="" selected disabled hidden >Hidden Dimensions</option>
@@ -78,13 +78,12 @@
 
     [Parameter] public EventCallback ReloadData { get; set; }
     [Parameter] public EventCallback RenderTable { get; set; }
-    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, bool>> DimensionsChanged { get; set; }
+    [Parameter] public EventCallback<Tuple<List<Dimension<T>>, Dimension<T>, DropZone>> DimensionsChanged { get; set; }
     [Parameter] public EventCallback<bool> GrandTotalsCheckedChanged { get; set; }
     [Parameter] public int MaxDimensionsPerAxis { get; set; }
 
     public async Task OnReloadData() => await ReloadData.InvokeAsync();
     public async Task OnRenderTable() => await RenderTable.InvokeAsync();
-    public async Task OnDimensioncsChanged(Tuple<List<Dimension<T>>, bool> arg) => await DimensionsChanged.InvokeAsync(arg);
     public async Task OnGrandTotalsCheckChanged(ChangeEventArgs e) => await GrandTotalsCheckedChanged.InvokeAsync((bool)e.Value);
     private List<Dimension<T>> DummyItems;
 
@@ -112,8 +111,6 @@
         }
     }
 
-
-
     public async void MeasureCheckedChanged(Measure<T> measure, ChangeEventArgs e)
     {
         bool option = (bool)e.Value;
@@ -126,13 +123,12 @@
         await OnRenderTable();
     }
 
-    public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(HiddenDimensions, true));
+    //public void OnItemDrop(Dimension<T> dim) => DimensionsChanged.InvokeAsync(Tuple.Create(HiddenDimensions, true));
 
     private async Task HideDimension(Dimension<T> dim)
     {
+        await DimensionsChanged.InvokeAsync(Tuple.Create<List<Dimension<T>>, Dimension<T>, DropZone>(null, dim, DropZone.Hidden));
         DummyItems.Remove(dim);
-        dim.IsEnabled = false;
-        await OnRenderTable();
     }
 
     private async Task ShowDimension(ChangeEventArgs e)

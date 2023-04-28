@@ -39,8 +39,6 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             set => _ = value;
         }
 
-
-
         public int MaxDimensionsPerAxis => Dimensions.Count == 2 ? 2 : Dimensions.Count - 1;
 
         public Matrix Matrix { get; set; }
@@ -79,34 +77,70 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             Matrix = matrixBuilder.ToggleNodeExpansion(nodeID);
         }
 
-        
-
         public bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
 
-        
-
-        public void DimensionsChanged(Tuple<List<Dimension<T>>, bool> args)
+        public void DimensionsChanged(Tuple<List<Dimension<T>>, Dimension<T>, DropZone> args)
         {
+            List<Dimension<T>> axisDimensions = null;
+            Dimension<T> dim = args.Item2;
+            DropZone dropZone = args.Item3;
             List<Dimension<T>> enabledDimensions = Dimensions.Where(x => x.IsEnabled).ToList();
-            int sequence = 0;
-            string draggedDim = null; 
 
-            foreach (Dimension<T> dim in args.Item1)
+            //if (dropZone == DropZone.Hidden)
+            //    axisDimensions = dim.IsRow ?  RowDimensions : ColumnDimensions;
+            //else
+            //    axisDimensions = dropZone == DropZone.Rows ? RowDimensions : ColumnDimensions;
+
+            if (dropZone == DropZone.Hidden)
             {
-                if (dim.IsRow != args.Item2)
-                    draggedDim = dim.ID; // this dimension was dragged across axis
-
-                dim.Sequence = sequence++;
-                dim.IsRow = args.Item2;
+                if (dim.IsRow)
+                    axisDimensions = RowDimensions;
+                else
+                    axisDimensions = ColumnDimensions;
+            }
+            else
+            {
+                axisDimensions = args.Item1;
             }
 
-            // if we have exactly two enabled dimensions, find the other dimension and make
-            // sure it's axis is different than the dimension that was dragged.
-
-            if (enabledDimensions.Count == 2 && ! string.IsNullOrEmpty(draggedDim))
+            if (dropZone != DropZone.Hidden) 
             {
-                Dimension<T> other = enabledDimensions.First(x => x.ID != draggedDim);
-                other.IsRow = ! args.Item2;
+                bool isRows = dropZone == DropZone.Rows;
+                List<Dimension<T>> crossAxisDimensions = null;
+                //crossAxisDimensions = isRows ? ColumnDimensions : RowDimensions;
+
+                if (isRows)
+                    crossAxisDimensions = ColumnDimensions;
+                else
+                    crossAxisDimensions = RowDimensions;
+
+                if (crossAxisDimensions.Count > 1 || enabledDimensions.Count == 2)
+                {
+                    dim.IsRow = isRows;
+                    int sequence = 0;
+                    axisDimensions.ForEach(x => x.Sequence = sequence++);
+
+                    // if we have exactly two enabled dimensions, find the other dimension and make
+                    // sure it's axis is different than the dimension that was dragged.
+
+                    if (enabledDimensions.Count == 2 && enabledDimensions.All(x => x.IsRow == isRows))
+                    {
+                        Dimension<T> other = enabledDimensions.First(x => x.ID != dim.ID);
+                        other.IsRow = !isRows;
+                    }
+                }
+                else
+                    return;
+            }
+            else
+            {
+                // User dragged a dimension to hidden dropzone
+                // Only hide the dim if there is another one that is visible on the same axis
+
+                if (axisDimensions.Count > 1)
+                    dim.IsEnabled = false;
+                else
+                    return; // don't render
             }
             RenderTable();
         }
