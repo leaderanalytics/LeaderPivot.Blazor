@@ -72,7 +72,7 @@ public class VintageTests
         Stopwatch sw = Stopwatch.StartNew();
         MatrixBuilder.BuildMatrix(TestVintages, Dimensions, Measures, true);
         sw.Stop();
-        Assert.IsTrue(sw.Elapsed.TotalSeconds < 60);
+        Assert.That(sw.Elapsed.TotalSeconds < 60);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class VintageTests
         Stopwatch sw = Stopwatch.StartNew();
         NodeBuilder.Build(TestVintages, Dimensions, Measures, true);
         sw.Stop();
-        Assert.IsTrue(sw.Elapsed.TotalSeconds < 30);
+        Assert.That(sw.Elapsed.TotalSeconds < 30);
     }
 
     [Test]
@@ -95,6 +95,6 @@ public class VintageTests
         Stopwatch sw = Stopwatch.StartNew();
         await pivot.ReloadData();
         sw.Stop();
-        Assert.IsTrue(sw.Elapsed.TotalSeconds < 30);
+        Assert.That(sw.Elapsed.TotalSeconds < 30);
     }
 }

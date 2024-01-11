@@ -11,7 +11,7 @@ A pivot table control for Blazor.
 * User configurable measures
 * Four color themes provided, customize or create your own.
 
-![Leader Analytics pivot table control](./screencap.png) 
+![Dark](./screencap_dark.png) 
 
 # Getting Started
 
@@ -39,3 +39,8 @@ A pivot table control for Blazor.
       
 
 [LeaderPivot WPF implementation is available here](https://github.com/leaderanalytics/LeaderPivot.XAML.WPF)
+
+## Version History
+3.0.0 - Optimize rendering, update to net 8.
+2.0.0 - Improve themeing.
+1.0.0 - Initial release, net 6.
