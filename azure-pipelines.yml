@@ -39,9 +39,9 @@ steps:
   displayName: Set Version
 
 - task: UseDotNet@2
-  displayName: 'Use dotnet 7'
+  displayName: 'Use dotnet 8'
   inputs:
-    version: '7.x'
+    version: '8.x'
 
 - task: NuGetToolInstaller@1
 
