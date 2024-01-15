@@ -1,4 +1,4 @@
-﻿/*@import url('leader-pivot-css/open-iconic/font/css/open-iconic-bootstrap.min.css');*/
+﻿@import url("leader-pivot-css/open-iconic/font/css/open-iconic-bootstrap.min.css");
 :root {
   --primary: #007bff;
 }
