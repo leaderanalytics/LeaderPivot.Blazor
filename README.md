@@ -4,7 +4,7 @@
 
 A pivot table control for Blazor.
 
-## [Live Demo](https://leaderanalytics.com/blazor/leaderpivotdemo)
+## [Live Demo](https://leaderanalytics.com/blazor/leader-pivot-demo)
 
 * Easy to implement and configure
 * Drag and drop dimensions across axis
