@@ -11,7 +11,7 @@ A pivot table control for Blazor.
 * User configurable measures
 * Four color themes provided, customize or create your own.
 
-![Dark](./screencap_dark.png) 
+
 
 # Getting Started
 
@@ -25,13 +25,13 @@ A pivot table control for Blazor.
 
 * Create [Dimensions](https://github.com/leaderanalytics/LeaderPivot/blob/main/LeaderPivot/Dimension.cs) and [Measures](https://github.com/leaderanalytics/LeaderPivot/blob/main/LeaderPivot/Measure.cs).    Dimensions are used to group data.  Measures are used to create the values shown in each cell of the pivot table.  Examples are provided in the [TestData](https://github.com/leaderanalytics/LeaderPivot.TestData/blob/main/LeaderPivot.TestData/SalesData.cs) project.
 
-* Add a [LeaderPivot control](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/LeaderPivot.BlazorDemo/Pages/LeaderPivotDemo.razor) to your page.  
+* Add a [LeaderPivot control](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/Server/LeaderPivot.BlazorDemo.Server/Components/Pages/LeaderPivotDemo.razor) to your page.  
 
-* Add LeaderPivot to your [dependency injection container](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/LeaderPivot.BlazorDemo/Program.cs):
+* Add LeaderPivot to your [dependency injection container](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/Server/LeaderPivot.BlazorDemo.Server/Program.cs):
 
     `builder.Services.AddLeaderPivot();`
 
-* Add css to [`index.html`](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/LeaderPivot.BlazorDemo/wwwroot/index.html):
+* Add css to [`App.razor`](https://github.com/leaderanalytics/LeaderPivot.BlazorDemo/blob/main/Server/LeaderPivot.BlazorDemo.Server/Components/App.razor):
 
     
        
@@ -41,6 +41,9 @@ A pivot table control for Blazor.
 [LeaderPivot WPF implementation is available here](https://github.com/leaderanalytics/LeaderPivot.XAML.WPF)
 
 ## Version History
+
 3.0.0 - Optimize rendering, update to net 8.
+
 2.0.0 - Improve themeing.
+
 1.0.0 - Initial release, net 6.
