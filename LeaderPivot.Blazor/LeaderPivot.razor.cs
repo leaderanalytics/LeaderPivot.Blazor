@@ -20,6 +20,7 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         [Parameter] public bool DisplayReloadDataButton { get; set; }
         [Parameter] public bool DisplayHiddenDimSelector { get; set; }
         [Parameter] public Func<Task<IEnumerable<T>>> DataSource { get; set; }
+        [Parameter] public Func<bool,Task>? IsBusyChanged { get; set; }
 
         public List<Dimension<T>> RowDimensions 
         {
@@ -42,14 +43,24 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         public int MaxDimensionsPerAxis => Dimensions.Count == 2 ? 2 : Dimensions.Count - 1;
 
         public Matrix Matrix { get; set; }
+        
         private MatrixBuilder<T> matrixBuilder;
         private IEnumerable<T> Data;
+        private int BusyCount;
 
         public LeaderPivot()
         {
             NodeBuilder<T> nodeBuilder = new NodeBuilder<T>();
             Validator<T> validator = new Validator<T>();
             matrixBuilder = new MatrixBuilder<T>(nodeBuilder, validator);
+        }
+
+        public async Task ReloadData()
+        {
+            await ToggleIsBusy(true);
+            Data = await DataSource();
+            await RenderTable();
+            await ToggleIsBusy(false);
         }
 
         protected override async Task OnInitializedAsync()
@@ -61,25 +72,23 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             await base.OnInitializedAsync();
         }
 
-        public async Task ReloadData()
+        private async Task RenderTable()
         {
-            Data = await DataSource();
-            RenderTable();
-        }
-
-        public void RenderTable()
-        {
+            await ToggleIsBusy(true);
             Matrix = matrixBuilder.BuildMatrix(Data, Dimensions, Measures, DisplayGrandTotals);
+            await ToggleIsBusy(false);
         }
 
-        public void ToggleNodeExpansion(string nodeID)
+        private async Task ToggleNodeExpansion(string nodeID)
         {
+            await ToggleIsBusy(true);
             Matrix = matrixBuilder.ToggleNodeExpansion(nodeID);
+            await ToggleIsBusy(false);
         }
 
-        public bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
+        private bool IsMeasureCheckBoxDisabled(Measure<T> measure) => ! measure.CanDisable;
 
-        public void DimensionsChanged(Tuple<List<Dimension<T>>, Dimension<T>, DropZone> args)
+        private void DimensionsChanged(Tuple<List<Dimension<T>>, Dimension<T>, DropZone> args)
         {
             List<Dimension<T>> axisDimensions = null;
             Dimension<T> dim = args.Item2;
@@ -145,10 +154,20 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
             RenderTable();
         }
 
-        public async Task GrandTotalsCheckedChanged(bool arg)
+        private async Task GrandTotalsCheckedChanged(bool arg)
         {
             DisplayGrandTotals = arg;
             RenderTable();
+        }
+
+        private async Task ToggleIsBusy(bool busy)
+        {
+            bool wasBusy = BusyCount > 0;
+            BusyCount += (busy ? 1 : -1);
+            bool isBusy = BusyCount > 0;
+
+            if(wasBusy != isBusy && IsBusyChanged is not null)
+                await IsBusyChanged(busy);
         }
     }
 }
