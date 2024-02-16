@@ -20,7 +20,8 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         [Parameter] public bool DisplayReloadDataButton { get; set; }
         [Parameter] public bool DisplayHiddenDimSelector { get; set; }
         [Parameter] public Func<Task<IEnumerable<T>>> DataSource { get; set; }
-        [Parameter] public Func<bool,Task>? IsBusyChanged { get; set; }
+        [Parameter] public bool IsBusy { get; set; }
+        [Parameter] public EventCallback<bool> IsBusyChanged { get; set; }
 
         public List<Dimension<T>> RowDimensions 
         {
@@ -163,11 +164,14 @@ namespace LeaderAnalytics.LeaderPivot.Blazor
         private async Task ToggleIsBusy(bool busy)
         {
             bool wasBusy = BusyCount > 0;
-            BusyCount += (busy ? 1 : -1);
+            BusyCount = Math.Max(0, BusyCount + (busy ? 1 : -1));
             bool isBusy = BusyCount > 0;
 
-            if(wasBusy != isBusy && IsBusyChanged is not null)
-                await IsBusyChanged(busy);
+            if (wasBusy != isBusy)
+            {
+                IsBusy = isBusy;
+                await IsBusyChanged.InvokeAsync(isBusy);
+            }
         }
     }
 }
