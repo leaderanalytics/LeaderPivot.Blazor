@@ -38,18 +38,6 @@ steps:
 - script: nbgv cloud
   displayName: Set Version
 
-- task: UseDotNet@2
-  displayName: 'Use dotnet 8'
-  inputs:
-    version: '8.x'
-
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-    vstsFeed: 'LeaderAnalyticsFeed'
-
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:

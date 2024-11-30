@@ -41,6 +41,7 @@ A pivot table control for Blazor.
 [LeaderPivot WPF implementation is available here](https://github.com/leaderanalytics/LeaderPivot.XAML.WPF)
 
 ## Version History
+4.0.0 - net 9.
 
 3.0.0 - Optimize rendering, update to net 8.
 
